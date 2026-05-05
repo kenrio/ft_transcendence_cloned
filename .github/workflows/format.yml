@@ -1,0 +1,26 @@
+# ワークフロー名（GitHub上に表示）
+name: format-check
+
+# いつ実行されるか
+on:
+  push:
+    branches:
+      - "**" # すべてのブランチへのpush
+
+jobs: # 実行するジョブ
+  format:
+    runs-on: ubuntu-latest # Ubuntu環境で実行
+
+    steps: # 実行する手順（上から順番に実行）
+      - uses: actions/checkout@v4 # ソースコードを取得
+
+      - name: Setup Node.js # Node.jsをセットアップ（ステップ名）
+        uses: actions/setup-node@v4 # Node.jsをセットアップ
+        with:
+          node-version: "20" # Node.js 20をインストール　
+
+      - name: Install dependencies # 依存関係（必要なパッケージなど）をインストール
+        run: npm ci # package-lock.json通りにパッケージをインストール
+
+      - name: Check format
+        run: npm run format:check

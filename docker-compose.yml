@@ -1,0 +1,56 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=${APP_URL:-}
+      - VITE_PROXY_TARGET=http://backend:3000
+      - VITE_AUTH_REDIRECT_ENABLED=true
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://oekaki:password@db:5432/oekaki_db
+      - FRONTEND_URL=${APP_URL:-http://localhost:5173}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=oekaki
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=oekaki_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  ngrok:
+    image: ngrok/ngrok:alpine
+    command: http frontend:5173
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    ports:
+      - "4040:4040"
+    depends_on:
+      - frontend
+    profiles:
+      - ngrok
+
+volumes:
+  postgres_data:
