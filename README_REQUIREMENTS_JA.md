@@ -1,4 +1,4 @@
-\*\*\*\*# ft_transcendence README 評価要件（日本語）
+# ft_transcendence README 評価要件（日本語）
 
 42 ft_transcendence プロジェクトの README.md に求められる評価要件を日本語でまとめたものです。
 
