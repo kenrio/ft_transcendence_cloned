@@ -157,6 +157,18 @@ export const googleCallback = async (
 	const frontendUrl = getFrontendUrlForRedirect(origin);
 	const redirectUri = `${origin}/v1/auth/google/callback`;
 
+	// ★ 追加: 入り口のログ
+	console.log("[googleCallback] START", {
+		hasCode: !!code,
+		hasError: !!error,
+		errorValue: error,
+		hasState: !!state,
+		origin,
+		frontendUrl,
+		redirectUri,
+		hasCookie: !!request.cookies?.oauth_state,
+	});
+
 	// CookieのstateからmodeをパースしてerrorBaseを決定
 	const cookieStateRaw = request.cookies?.oauth_state;
 	const mode = parseModeFromCookieState(cookieStateRaw);
