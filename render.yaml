@@ -25,7 +25,7 @@ services:
       runtime: static
       rootDir: frontend
       buildCommand: npm ci && npm run build
-      staticPublicPath: ./dist
+      staticPublishPath: ./dist
       routes:
           - type: rewrite
             source: /api/*
