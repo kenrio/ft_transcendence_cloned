@@ -14,12 +14,23 @@ const fastify = Fastify({
 	logger: true,
 });
 
-// CORS設定 (Reactアプリからのリクエストを許可)
+const allowedOrigins = (process.env.FRONTEND_URL ?? "")
+	.split(",")
+	.map(s => s.trim())
+	.filter(Boolean);
+
 fastify.register(cors, {
-	origin: true, // 開発環境なので全て許可 (本番では制限を推奨)
+	origin: allowedOrigins.length > 0 ? allowedOrigins : true,
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 	credentials: true, // Cookieを送受信するため
 });
+
+// CORS設定 (Reactアプリからのリクエストを許可)
+// fastify.register(cors, {
+// 	origin: true, // 開発環境なので全て許可 (本番では制限を推奨)
+// 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+// 	credentials: true, // Cookieを送受信するため
+// });
 
 // WebSocket機能を有効化する
 fastify.register(websocket);

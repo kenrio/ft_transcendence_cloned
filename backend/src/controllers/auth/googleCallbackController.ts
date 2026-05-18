@@ -35,6 +35,7 @@ const isAllowedOrigin = (origin: string): boolean => {
 		if (u.hostname === "localhost" || u.hostname === "127.0.0.1")
 			return true;
 		if (u.hostname.endsWith(".ngrok-free.dev")) return true;
+		if (u.hostname.endsWith(".onrender.com")) return true;
 		return false;
 	} catch {
 		return false;
