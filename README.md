@@ -108,6 +108,8 @@ http://localhost:5173
 - WebSocket API (MDN) (https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
     - 参考箇所: WebSocketクライアントの onopen/onclose/onerror ハンドリング
 
+- Daisy UI (https://daisyui.com/components/)
+
 - Fastify 公式ドキュメント (https://fastify.dev)
     - 参考箇所: ルーティング、@fastify/websocketプラグインの使い方
 
