@@ -4,7 +4,7 @@ import { getBackendBaseUrl } from "./backendUrl";
  * WebSocket URLを生成
  */
 export const getWebSocketUrl = () => {
-	const wsEnv = (import.meta.any.VITE_WS_URL ?? "").trim();
+	const wsEnv = (import.meta.env.VITE_WS_URL ?? "").trim();
 	if (wsEnv) return wsEnv.replace(/\/$/, "") + "/ws";
 
 	const base = getBackendBaseUrl();
