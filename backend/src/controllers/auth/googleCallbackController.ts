@@ -140,6 +140,10 @@ const getFrontendUrlForRedirect = (origin: string): string => {
 		if (u.hostname === "localhost" && u.port === "3000") {
 			return FRONTEND_LOCAL;
 		}
+
+		if (process.env.NODE_ENV === "production") {
+			return FRONTEND_URL_FALLBACK;
+		}
 	} catch {}
 	return isAllowedOrigin(origin) ? origin : FRONTEND_URL_FALLBACK;
 };
