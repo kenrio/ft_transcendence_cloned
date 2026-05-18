@@ -79,7 +79,7 @@ export const googleAuth = async (
 		reply.setCookie("oauth_state", stateStr, {
 			path: "/",
 			httpOnly: true,
-			sameSite: "lax",
+			sameSite: useSecure ? "none" : "lax",
 			secure: useSecure,
 			maxAge: 60 * 10, // 10分
 		});
