@@ -62,7 +62,14 @@ export const googleAuth = async (
 				.send({ message: "許可されていないオリジンです" });
 		}
 
-		const redirectUri = `${origin}/v1/auth/google/callback`;
+		const redirectBaseUrl =
+			process.env.NODE_ENV === "production"
+				? FRONTEND_URL_FALLBACK
+				: origin;
+
+		// const redirectUri = `${origin}/v1/auth/google/callback`;
+		const redirectUri = `${redirectBaseUrl}/v1/auth/google/callback`;
+
 		const oauth2Client = new OAuth2Client(
 			GOOGLE_CLIENT_ID,
 			GOOGLE_CLIENT_SECRET,
@@ -155,7 +162,12 @@ export const googleCallback = async (
 	const { code, error, state } = request.query;
 	const origin = getOriginFromRequest(request);
 	const frontendUrl = getFrontendUrlForRedirect(origin);
-	const redirectUri = `${origin}/v1/auth/google/callback`;
+
+	const redirectBaseUrl =
+		process.env.NODE_ENV === "production" ? FRONTEND_URL_FALLBACK : origin;
+
+	// const redirectUri = `${origin}/v1/auth/google/callback`;
+	const redirectUri = `${redirectBaseUrl}/v1/auth/google/callback`;
 
 	// ★ 追加: 入り口のログ
 	console.log("[googleCallback] START", {
